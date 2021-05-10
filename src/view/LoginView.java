@@ -5,6 +5,12 @@
  */
 package view;
 
+import DAO.UsuarioDAO;
+import DTO.UsuarioDTO;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Pichau
@@ -16,6 +22,7 @@ public class LoginView extends javax.swing.JFrame {
      */
     public LoginView() {
         initComponents();
+
     }
 
     /**
@@ -27,18 +34,24 @@ public class LoginView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        txtNomeUsuario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtSenhaUsuario = new javax.swing.JPasswordField();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton2 = new javax.swing.JToggleButton();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 147, -1));
+
+        txtNomeUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeUsuarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtNomeUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 147, -1));
 
         jLabel1.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -49,7 +62,7 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Senha");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, 60, -1));
-        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 147, -1));
+        getContentPane().add(txtSenhaUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 147, -1));
 
         jToggleButton1.setText("Entrar");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -67,11 +80,8 @@ public class LoginView extends javax.swing.JFrame {
         });
         getContentPane().add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 147, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/6b91fa5b70830285f86fa4c97bf1020c-1000.jpg"))); // NOI18N
-        jLabel3.setMaximumSize(new java.awt.Dimension(1920, 1080));
-        jLabel3.setMinimumSize(new java.awt.Dimension(1920, 1080));
-        jLabel3.setPreferredSize(new java.awt.Dimension(1000, 600));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 560));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/bb80728cb8cb030a872d6945fd39bcec.jpg"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -82,9 +92,13 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-       MenuView telaDeMenu = new MenuView();
-       telaDeMenu.setVisible (true);
+        Logar();
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void txtNomeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,10 +138,41 @@ public class LoginView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JTextField txtNomeUsuario;
+    private javax.swing.JPasswordField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private void Logar() {
+        try {
+            String nome_usuario, senha_usuario;
+
+            nome_usuario = txtNomeUsuario.getText();
+            senha_usuario = txtSenhaUsuario.getText();
+
+            UsuarioDTO objusuariodto = new UsuarioDTO();
+            objusuariodto.setNome_usuario(nome_usuario);
+            objusuariodto.setSenha_usuario(senha_usuario);
+
+            UsuarioDAO objusuariodao = new UsuarioDAO();
+            ResultSet rsusuariodao = objusuariodao.autenticacaoUsuario(objusuariodto);
+
+            if (rsusuariodao.next()) {
+                //chamar tela que eu quero abrir
+                MenuView objmenuview = new MenuView();
+                objmenuview.setVisible(true);
+
+                dispose();
+            } else {
+                //enviar mensagem "incorreto"
+                JOptionPane.showMessageDialog(null, "Usuário ou Senha Inválida");
+            }
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "LOGINVIEW" + erro);
+        }
+    }
+
 }
