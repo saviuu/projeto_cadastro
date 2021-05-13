@@ -5,6 +5,15 @@
  */
 package view;
 
+import DAO.UsuarioDAO;
+import DTO.UsuarioDTO;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Pichau
@@ -16,6 +25,7 @@ public class FormCadastroView extends javax.swing.JFrame {
      */
     public FormCadastroView() {
         initComponents();
+        setLocationRelativeTo(null);
         
     }
 
@@ -28,31 +38,17 @@ public class FormCadastroView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtTextFieldId = new javax.swing.JTextField();
         txtTextFieldUsuario = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         txtFieldSenha = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(660, 560));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtTextFieldId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTextFieldIdActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtTextFieldId, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 138, -1));
         getContentPane().add(txtTextFieldUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 138, -1));
-
-        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("ID");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -74,19 +70,38 @@ public class FormCadastroView extends javax.swing.JFrame {
         getContentPane().add(txtFieldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 138, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/bb80728cb8cb030a872d6945fd39bcec.jpg"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 550));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 710, 660));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTextFieldIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTextFieldIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTextFieldIdActionPerformed
-
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
+          try {
+            Cadastrar();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
-
+    private void Cadastrar()throws NoSuchAlgorithmException {
+        String nome_usuario, senha_usuario;
+        nome_usuario = txtTextFieldUsuario.getText();
+        senha_usuario = txtFieldSenha.getText();
+        UsuarioDTO objusuariodto = new UsuarioDTO();
+        objusuariodto.setNome_usuario(nome_usuario);
+        objusuariodto.setSenha_usuario(senha_usuario);
+        UsuarioDAO objusuariodao = new UsuarioDAO();
+        boolean rsusuariodao = objusuariodao.cadastraUsuario(objusuariodto);
+        if (rsusuariodao) {
+            //chamar tela que eu quero abrir
+            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+            
+            
+            dispose();
+        } else {
+            //enviar mensagem "incorreto"
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o cadastro!");
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -123,13 +138,11 @@ public class FormCadastroView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JPasswordField txtFieldSenha;
-    private javax.swing.JTextField txtTextFieldId;
     private javax.swing.JTextField txtTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

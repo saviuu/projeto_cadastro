@@ -7,8 +7,11 @@ package view;
 
 import DAO.UsuarioDAO;
 import DTO.UsuarioDTO;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +25,7 @@ public class LoginView extends javax.swing.JFrame {
      */
     public LoginView() {
         initComponents();
+        setLocationRelativeTo(null);
 
     }
 
@@ -39,7 +43,6 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtSenhaUsuario = new javax.swing.JPasswordField();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,27 +75,18 @@ public class LoginView extends javax.swing.JFrame {
         });
         getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 390, 147, -1));
 
-        jToggleButton2.setText("Cadastrar");
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 147, -1));
-
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/bb80728cb8cb030a872d6945fd39bcec.jpg"))); // NOI18N
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        FormCadastroView telaDeCadastro = new FormCadastroView();
-        telaDeCadastro.setVisible(true);
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
-
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        Logar();
+        try {
+            Logar();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
@@ -140,12 +134,11 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JTextField txtNomeUsuario;
     private javax.swing.JPasswordField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 
-    private void Logar() {
+    private void Logar()throws NoSuchAlgorithmException {
         try {
             String nome_usuario, senha_usuario;
 
