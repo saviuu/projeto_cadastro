@@ -1,12 +1,77 @@
-
 package view;
 
+import DAO.PessoaDAO;
+import DTO.PessoaDTO;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
-
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import view.FormConsultaPessoa;
+import view.LoginView;
 
 public class CadastroPessoaMenu extends javax.swing.JFrame {
 
-  
+    private PessoaDTO objpessoadtoAlterar = null;
+
+    public CadastroPessoaMenu(int idPessoa) {
+        initComponents();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        if (idPessoa > 0) {
+            try {
+
+                PessoaDAO objpessoadao = new PessoaDAO();
+                ResultSet rsusuariodao = objpessoadao.buscaPessoaID(idPessoa);
+
+                if (rsusuariodao.next()) {
+                    txtInputCPF.setText(rsusuariodao.getString("cpf"));
+                    txtInputNome.setText(rsusuariodao.getString("nome"));
+                    txtInputEndereco.setText(rsusuariodao.getString("endereco"));
+                    txtInputNumero.setText(rsusuariodao.getString("numero"));
+                    txtInputBairro.setText(rsusuariodao.getString("bairro"));
+                    txtInputComplemento.setText(rsusuariodao.getString("complemento"));
+                    txtInputMunicipio.setText(rsusuariodao.getString("municipio"));
+                    txtInputRG.setText(rsusuariodao.getString("rg"));
+                    txtInputCEP.setText(rsusuariodao.getString("cep"));
+                    txtInputUF.setText(rsusuariodao.getString("uf"));
+
+                    String cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg;
+                    cpf = txtInputCPF.getText();
+                    numero = txtInputNumero.getText();
+                    nome = txtInputNome.getText();
+                    cep = txtInputCEP.getText();
+                    endereco = txtInputEndereco.getText();
+                    bairro = txtInputBairro.getText();
+                    complemento = txtInputComplemento.getText();
+                    municipio = txtInputMunicipio.getText();
+                    uf = txtInputUF.getText();
+                    rg = txtInputRG.getText();
+
+                    PessoaDTO objpessoadto = new PessoaDTO();
+                    objpessoadto.setNome(nome);
+                    objpessoadto.setNumero(numero);
+                    objpessoadto.setCpf(cpf);
+                    objpessoadto.setCep(cep);
+                    objpessoadto.setEndereco(endereco);
+                    objpessoadto.setBairro(bairro);
+                    objpessoadto.setComplemento(complemento);
+                    objpessoadto.setMunicipio(municipio);
+                    objpessoadto.setUf(uf);
+                    objpessoadto.setRg(rg);
+                    objpessoadto.setId_Pessoa(idPessoa);
+                    
+                    this.objpessoadtoAlterar = objpessoadto;
+
+                }
+            } catch (NoSuchAlgorithmException | SQLException ex) {
+                Logger.getLogger(FormConsultaPessoa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public CadastroPessoaMenu() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -21,6 +86,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -31,20 +97,22 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        txtInputNome = new javax.swing.JTextField();
+        txtInputEndereco = new javax.swing.JTextField();
+        txtInputNumero = new javax.swing.JTextField();
+        txtInputBairro = new javax.swing.JTextField();
+        txtInputComplemento = new javax.swing.JTextField();
+        txtInputMunicipio = new javax.swing.JTextField();
+        txtInputUF = new javax.swing.JTextField();
+        txtInputRG = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        txtInputCPF = new javax.swing.JFormattedTextField();
+        txtInputCEP = new javax.swing.JFormattedTextField();
+        jButton3 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/bb80728cb8cb030a872d6945fd39bcec.jpg"))); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -98,35 +166,20 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("RG:");
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 69, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 163, -1));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtInputNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtInputNomeActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 485, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 118, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 163, -1));
-        getContentPane().add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 68, -1));
-        getContentPane().add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 216, -1));
-        getContentPane().add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 216, -1));
-        getContentPane().add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 163, -1));
-        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 320, 39, -1));
-        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 100, -1));
-
-        jLabel11.setFont(new java.awt.Font("Microsoft YaHei Light", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("ID:");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, -1, -1));
-
-        jTextField11.setEditable(false);
-        jTextField11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField11ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, 51, -1));
+        getContentPane().add(txtInputNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 485, -1));
+        getContentPane().add(txtInputEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 163, -1));
+        getContentPane().add(txtInputNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 68, -1));
+        getContentPane().add(txtInputBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 216, -1));
+        getContentPane().add(txtInputComplemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 216, -1));
+        getContentPane().add(txtInputMunicipio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 163, -1));
+        getContentPane().add(txtInputUF, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 320, 39, -1));
+        getContentPane().add(txtInputRG, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 350, 100, -1));
 
         jButton1.setText("Procurar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -134,26 +187,207 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 40, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, 180, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/bb80728cb8cb030a872d6945fd39bcec.jpg"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jButton2.setText("Cadastrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 180, -1));
+
+        try {
+            txtInputCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(txtInputCPF, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 150, -1));
+
+        try {
+            txtInputCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(txtInputCEP, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, 150, -1));
+
+        jButton3.setText("Excluir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 180, -1));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/bb80728cb8cb030a872d6945fd39bcec.jpg"))); // NOI18N
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtInputNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtInputNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField11ActionPerformed
+    }//GEN-LAST:event_txtInputNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       FormConsultaPessoa consultaPessoa = new FormConsultaPessoa();
-       consultaPessoa.setVisible(true);
+        FormConsultaPessoa consultaPessoa = new FormConsultaPessoa();
+        consultaPessoa.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        try {
+            if (this.objpessoadtoAlterar != null) {
+                Alterar();
+            } else {
+                Cadastrar();
+            }
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            if (this.objpessoadtoAlterar != null) {
+                Excluir();
+            } 
+            
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void Cadastrar() throws NoSuchAlgorithmException {
+        String cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg;
+        cpf = txtInputCPF.getText();
+        numero = txtInputNumero.getText();
+        nome = txtInputNome.getText();
+        cep = txtInputCEP.getText();
+        endereco = txtInputEndereco.getText();
+        bairro = txtInputBairro.getText();
+        complemento = txtInputComplemento.getText();
+        municipio = txtInputMunicipio.getText();
+        uf = txtInputUF.getText();
+        rg = txtInputRG.getText();
+
+        PessoaDTO objpessoadto = new PessoaDTO();
+        objpessoadto.setNome(nome);
+        objpessoadto.setNumero(numero);
+        objpessoadto.setCpf(cpf);
+        objpessoadto.setCep(cep);
+        objpessoadto.setEndereco(endereco);
+        objpessoadto.setBairro(bairro);
+        objpessoadto.setComplemento(complemento);
+        objpessoadto.setMunicipio(municipio);
+        objpessoadto.setUf(uf);
+        objpessoadto.setRg(rg);
+
+        PessoaDAO objusuariodao = new PessoaDAO();
+        boolean rsusuariodao = objusuariodao.cadastraPessoa(objpessoadto);
+        if (rsusuariodao) {
+            //chamar tela que eu quero abrir
+            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+
+            txtInputCPF.setText("");
+            txtInputNumero.setText("");
+            txtInputNome.setText("");
+            txtInputCEP.setText("");
+            txtInputEndereco.setText("");
+            txtInputBairro.setText("");
+            txtInputComplemento.setText("");
+            txtInputMunicipio.setText("");
+            txtInputUF.setText("");
+            txtInputRG.setText("");
+
+        } else {
+            //enviar mensagem "incorreto"
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o cadastro!");
+        }
+    }
+
+    private void Alterar() throws NoSuchAlgorithmException {
+        
+        String cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg;
+        cpf = txtInputCPF.getText();
+        numero = txtInputNumero.getText();
+        nome = txtInputNome.getText();
+        cep = txtInputCEP.getText();
+        endereco = txtInputEndereco.getText();
+        bairro = txtInputBairro.getText();
+        complemento = txtInputComplemento.getText();
+        municipio = txtInputMunicipio.getText();
+        uf = txtInputUF.getText();
+        rg = txtInputRG.getText();
+        
+        objpessoadtoAlterar.setNome(nome);
+        objpessoadtoAlterar.setNumero(numero);
+        objpessoadtoAlterar.setCpf(cpf);
+        objpessoadtoAlterar.setCep(cep);
+        objpessoadtoAlterar.setEndereco(endereco);
+        objpessoadtoAlterar.setBairro(bairro);
+        objpessoadtoAlterar.setComplemento(complemento);
+        objpessoadtoAlterar.setMunicipio(municipio);
+        objpessoadtoAlterar.setUf(uf);
+        objpessoadtoAlterar.setRg(rg);
+        
+        PessoaDAO objusuariodao = new PessoaDAO();
+        boolean rsusuariodao = objusuariodao.alteraPessoa(objpessoadtoAlterar);
+        if (rsusuariodao) {
+            //chamar tela que eu quero abrir
+            JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
+
+            txtInputCPF.setText("");
+            txtInputNumero.setText("");
+            txtInputNome.setText("");
+            txtInputCEP.setText("");
+            txtInputEndereco.setText("");
+            txtInputBairro.setText("");
+            txtInputComplemento.setText("");
+            txtInputMunicipio.setText("");
+            txtInputUF.setText("");
+            txtInputRG.setText("");
+            
+            this.objpessoadtoAlterar = null;
+
+        } else {
+            //enviar mensagem "incorreto"
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o cadastro!");
+        }
+    }
+    
+    private void Excluir() throws NoSuchAlgorithmException {
+        
+        
+        
+        PessoaDAO objusuariodao = new PessoaDAO();
+        boolean rsusuariodao = objusuariodao.exlcuiPessoa(objpessoadtoAlterar);
+        if (rsusuariodao) {
+            //chamar tela que eu quero abrir
+            JOptionPane.showMessageDialog(null, "Deletado com Sucesso!");
+
+            txtInputCPF.setText("");
+            txtInputNumero.setText("");
+            txtInputNome.setText("");
+            txtInputCEP.setText("");
+            txtInputEndereco.setText("");
+            txtInputBairro.setText("");
+            txtInputComplemento.setText("");
+            txtInputMunicipio.setText("");
+            txtInputUF.setText("");
+            txtInputRG.setText("");
+            
+            this.objpessoadtoAlterar = null;
+
+        } else {
+            //enviar mensagem "incorreto"
+            JOptionPane.showMessageDialog(null, "Não foi possível efetuar o cadastro!");
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -192,6 +426,8 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -204,16 +440,15 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtInputBairro;
+    private javax.swing.JFormattedTextField txtInputCEP;
+    private javax.swing.JFormattedTextField txtInputCPF;
+    private javax.swing.JTextField txtInputComplemento;
+    private javax.swing.JTextField txtInputEndereco;
+    private javax.swing.JTextField txtInputMunicipio;
+    private javax.swing.JTextField txtInputNome;
+    private javax.swing.JTextField txtInputNumero;
+    private javax.swing.JTextField txtInputRG;
+    private javax.swing.JTextField txtInputUF;
     // End of variables declaration//GEN-END:variables
 }

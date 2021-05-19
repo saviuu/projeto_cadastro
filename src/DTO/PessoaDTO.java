@@ -5,6 +5,10 @@ public class PessoaDTO {
     private int Id_Pessoa;
     private String cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg;
 
+    public void setId_Pessoa(int Id_Pessoa) {
+        this.Id_Pessoa = Id_Pessoa;
+    }
+    
     public int getId_Pessoa() {
         return Id_Pessoa;
     }

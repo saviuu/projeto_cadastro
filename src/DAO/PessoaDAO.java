@@ -29,7 +29,25 @@ public class PessoaDAO {
             return null;
         }
     }
-    
+
+    public ResultSet buscaPessoaID(int id) throws NoSuchAlgorithmException {
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+            String sql = "select * from pessoas where id = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+
+            ResultSet rs = pstm.executeQuery();
+            return rs;
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "PessoaDAO:" + erro);
+            return null;
+        }
+    }
+
     public ResultSet buscaPessoaNome(PessoaDTO objpessoadto) throws NoSuchAlgorithmException {
         conn = new ConexaoDAO().conectaBD();
 
@@ -37,7 +55,7 @@ public class PessoaDAO {
             String sql = "select * from pessoas where nome like ?";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, "%" + objpessoadto.getNome()+ "%");
+            pstm.setString(1, "%" + objpessoadto.getNome() + "%");
 
             ResultSet rs = pstm.executeQuery();
             return rs;
@@ -55,7 +73,7 @@ public class PessoaDAO {
             String sql = "insert into pessoas (cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objpessoadto.getCpf());
+            pstm.setString(1, objpessoadto.getCpf().replaceAll(".", "").replaceAll("-", ""));
             pstm.setString(2, objpessoadto.getNome());
             pstm.setString(3, objpessoadto.getCep());
             pstm.setString(4, objpessoadto.getEndereco());
@@ -74,12 +92,12 @@ public class PessoaDAO {
             return false;
         }
     }
-    
+
     public boolean alteraPessoa(PessoaDTO objpessoadto) throws NoSuchAlgorithmException {
         conn = new ConexaoDAO().conectaBD();
 
         try {
-            String sql = "update pessoas set cpf = ?, nome = ?, cep = ?, endereco = ?, numero = ?, bairro = ?, complemento = ?, municipio = ?, uf = ?, rg = ?";
+            String sql = "update pessoas set cpf = ?, nome = ?, cep = ?, endereco = ?, numero = ?, bairro = ?, complemento = ?, municipio = ?, uf = ?, rg = ? where id = ?";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
             pstm.setString(1, objpessoadto.getCpf());
@@ -92,6 +110,7 @@ public class PessoaDAO {
             pstm.setString(8, objpessoadto.getMunicipio());
             pstm.setString(9, objpessoadto.getUf());
             pstm.setString(10, objpessoadto.getRg());
+            pstm.setInt(11, objpessoadto.getId_Pessoa());
 
             int rs = pstm.executeUpdate();
             return rs > 0;
@@ -101,4 +120,23 @@ public class PessoaDAO {
             return false;
         }
     }
-   }
+
+    public boolean exlcuiPessoa(PessoaDTO objpessoadto) throws NoSuchAlgorithmException {
+        conn = new ConexaoDAO().conectaBD();
+
+        try {
+            String sql = "delete from pessoas where id = ?";
+
+            PreparedStatement pstm = conn.prepareStatement(sql);
+
+            pstm.setInt(1, objpessoadto.getId_Pessoa());
+
+            int rs = pstm.executeUpdate();
+            return rs > 0;
+
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "PessoaDAO:" + erro);
+            return false;
+        }
+    }
+}
