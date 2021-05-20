@@ -20,10 +20,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Pichau
  */
-public class FormConsultaPessoa extends javax.swing.JFrame {
+public class ConsultaPessoaView extends javax.swing.JFrame {
 
            
-    public FormConsultaPessoa() {
+    public ConsultaPessoaView() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -58,6 +58,21 @@ public class FormConsultaPessoa extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -81,7 +96,7 @@ public class FormConsultaPessoa extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTablePessoas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 302, 1120, 323));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 1120, 323));
 
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei Light", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,7 +148,7 @@ public class FormConsultaPessoa extends javax.swing.JFrame {
         try {
             PessoaDTO objpessoadto = new PessoaDTO();
             objpessoadto.setNome(txtInputNome.getText());
-            objpessoadto.setCpf(txtInputCPF.getText().replaceAll(".", "").replaceAll("-", "").trim());
+            objpessoadto.setCpf(txtInputCPF.getText().replaceAll("\\.", "").replaceAll("-", "").trim());
             
             PessoaDAO objpessoadao = new PessoaDAO();
             ResultSet rsusuariodao = null;
@@ -168,7 +183,7 @@ public class FormConsultaPessoa extends javax.swing.JFrame {
             jTablePessoas.setModel(dtm);
 
         } catch (NoSuchAlgorithmException | SQLException ex) {
-            Logger.getLogger(FormConsultaPessoa.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ConsultaPessoaView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_txtButtonPesquisarActionPerformed
@@ -180,7 +195,7 @@ public class FormConsultaPessoa extends javax.swing.JFrame {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int id = Integer.parseInt(jTablePessoas.getModel().getValueAt(jTablePessoas.getSelectedRow(),0).toString());
-        CadastroPessoaMenu cadastroPessoa = new CadastroPessoaMenu(id);
+        CadastroPessoaMenuView cadastroPessoa = new CadastroPessoaMenuView(id);
        cadastroPessoa.setVisible(true);
        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -202,21 +217,23 @@ public class FormConsultaPessoa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultaPessoaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultaPessoaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultaPessoaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormConsultaPessoa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConsultaPessoaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormConsultaPessoa().setVisible(true);
+                new ConsultaPessoaView().setVisible(true);
             }
         });
     }

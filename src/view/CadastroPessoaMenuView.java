@@ -10,14 +10,14 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import view.FormConsultaPessoa;
+import view.ConsultaPessoaView;
 import view.LoginView;
 
-public class CadastroPessoaMenu extends javax.swing.JFrame {
+public class CadastroPessoaMenuView extends javax.swing.JFrame {
 
     private PessoaDTO objpessoadtoAlterar = null;
 
-    public CadastroPessoaMenu(int idPessoa) {
+    public CadastroPessoaMenuView(int idPessoa) {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         if (idPessoa > 0) {
@@ -38,41 +38,19 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
                     txtInputCEP.setText(rsusuariodao.getString("cep"));
                     txtInputUF.setText(rsusuariodao.getString("uf"));
 
-                    String cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg;
-                    cpf = txtInputCPF.getText();
-                    numero = txtInputNumero.getText();
-                    nome = txtInputNome.getText();
-                    cep = txtInputCEP.getText();
-                    endereco = txtInputEndereco.getText();
-                    bairro = txtInputBairro.getText();
-                    complemento = txtInputComplemento.getText();
-                    municipio = txtInputMunicipio.getText();
-                    uf = txtInputUF.getText();
-                    rg = txtInputRG.getText();
-
                     PessoaDTO objpessoadto = new PessoaDTO();
-                    objpessoadto.setNome(nome);
-                    objpessoadto.setNumero(numero);
-                    objpessoadto.setCpf(cpf);
-                    objpessoadto.setCep(cep);
-                    objpessoadto.setEndereco(endereco);
-                    objpessoadto.setBairro(bairro);
-                    objpessoadto.setComplemento(complemento);
-                    objpessoadto.setMunicipio(municipio);
-                    objpessoadto.setUf(uf);
-                    objpessoadto.setRg(rg);
                     objpessoadto.setId_Pessoa(idPessoa);
-                    
+
                     this.objpessoadtoAlterar = objpessoadto;
 
                 }
             } catch (NoSuchAlgorithmException | SQLException ex) {
-                Logger.getLogger(FormConsultaPessoa.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConsultaPessoaView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public CadastroPessoaMenu() {
+    public CadastroPessoaMenuView() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
@@ -230,7 +208,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_txtInputNomeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        FormConsultaPessoa consultaPessoa = new FormConsultaPessoa();
+        ConsultaPessoaView consultaPessoa = new ConsultaPessoaView();
         consultaPessoa.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -254,8 +232,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
         try {
             if (this.objpessoadtoAlterar != null) {
                 Excluir();
-            } 
-            
+            }
 
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
@@ -311,7 +288,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
     }
 
     private void Alterar() throws NoSuchAlgorithmException {
-        
+
         String cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg;
         cpf = txtInputCPF.getText();
         numero = txtInputNumero.getText();
@@ -323,7 +300,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
         municipio = txtInputMunicipio.getText();
         uf = txtInputUF.getText();
         rg = txtInputRG.getText();
-        
+
         objpessoadtoAlterar.setNome(nome);
         objpessoadtoAlterar.setNumero(numero);
         objpessoadtoAlterar.setCpf(cpf);
@@ -334,7 +311,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
         objpessoadtoAlterar.setMunicipio(municipio);
         objpessoadtoAlterar.setUf(uf);
         objpessoadtoAlterar.setRg(rg);
-        
+
         PessoaDAO objusuariodao = new PessoaDAO();
         boolean rsusuariodao = objusuariodao.alteraPessoa(objpessoadtoAlterar);
         if (rsusuariodao) {
@@ -351,7 +328,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
             txtInputMunicipio.setText("");
             txtInputUF.setText("");
             txtInputRG.setText("");
-            
+
             this.objpessoadtoAlterar = null;
 
         } else {
@@ -359,11 +336,9 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível efetuar o cadastro!");
         }
     }
-    
+
     private void Excluir() throws NoSuchAlgorithmException {
-        
-        
-        
+
         PessoaDAO objusuariodao = new PessoaDAO();
         boolean rsusuariodao = objusuariodao.exlcuiPessoa(objpessoadtoAlterar);
         if (rsusuariodao) {
@@ -380,7 +355,7 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
             txtInputMunicipio.setText("");
             txtInputUF.setText("");
             txtInputRG.setText("");
-            
+
             this.objpessoadtoAlterar = null;
 
         } else {
@@ -406,20 +381,21 @@ public class CadastroPessoaMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroPessoaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPessoaMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroPessoaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPessoaMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroPessoaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPessoaMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroPessoaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroPessoaMenuView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroPessoaMenu().setVisible(true);
+                new CadastroPessoaMenuView().setVisible(true);
             }
         });
     }

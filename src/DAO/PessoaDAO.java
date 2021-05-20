@@ -73,7 +73,7 @@ public class PessoaDAO {
             String sql = "insert into pessoas (cpf, nome, cep, endereco, numero, bairro, complemento, municipio, uf, rg) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstm = conn.prepareStatement(sql);
-            pstm.setString(1, objpessoadto.getCpf().replaceAll(".", "").replaceAll("-", ""));
+            pstm.setString(1, objpessoadto.getCpf().replaceAll("\\.", "").replaceAll("-", ""));
             pstm.setString(2, objpessoadto.getNome());
             pstm.setString(3, objpessoadto.getCep());
             pstm.setString(4, objpessoadto.getEndereco());
